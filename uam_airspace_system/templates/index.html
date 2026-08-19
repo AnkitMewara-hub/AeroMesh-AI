@@ -2,7 +2,7 @@
 <html lang="en">
 <head>
   <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no" />
   <title>AeroMesh | Autonomous Airspace Monitor</title>
   <script src="https://cdn.tailwindcss.com"></script>
   <link rel="stylesheet" href="/static/style.css" />
@@ -10,87 +10,77 @@
 </head>
 <body class="bg-[#F1F5F9] text-slate-800 font-['Plus_Jakarta_Sans'] min-h-screen flex flex-col antialiased">
 
-  <!-- TOP HEADER -->
-  <header class="h-16 border-b border-slate-200 bg-white px-8 flex justify-between items-center z-10 shadow-sm sticky top-0">
-    <div class="flex items-center gap-3.5">
-      <div class="h-10 w-10 bg-blue-600 text-white rounded-xl flex items-center justify-center shadow-md shadow-blue-500/20 font-bold">
-        <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+  <header class="border-b border-slate-200 bg-white px-4 sm:px-8 py-3 flex flex-wrap justify-between items-center z-10 shadow-sm sticky top-0 gap-2">
+    <div class="flex items-center gap-2.5 sm:gap-3.5">
+      <div class="h-9 w-9 sm:h-10 sm:w-10 bg-blue-600 text-white rounded-xl flex items-center justify-center shadow-md shadow-blue-500/20 font-bold shrink-0">
+        <svg class="w-5 h-5 sm:w-6 sm:h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
           <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.5" d="M12 19l9 2-9-18-9 18 9-2zm0 0v-8"></path>
         </svg>
       </div>
       <div>
-        <h1 class="text-lg font-extrabold text-slate-900 tracking-tight leading-tight">AeroMesh Live Airspace</h1>
-        <p class="text-xs text-slate-500 font-medium">Autonomous UAM Air Traffic & Wildlife Avoidance</p>
+        <h1 class="text-base sm:text-lg font-extrabold text-slate-900 tracking-tight leading-tight">AeroMesh AI</h1>
+        <p class="text-[10px] sm:text-xs text-slate-500 font-medium hidden xs:block">Autonomous UAM Air Traffic & Avoidance</p>
       </div>
     </div>
 
-    <!-- QUICK ACTIONS -->
-    <div class="flex items-center gap-4">
-      <div id="airspaceBadge" data-state="safe" class="bg-emerald-50 border border-emerald-200 text-emerald-700 px-3.5 py-1.5 rounded-xl text-xs font-bold flex items-center gap-2">
+    <div class="flex items-center gap-2 sm:gap-3">
+      <div id="airspaceBadge" data-state="safe" class="bg-emerald-50 border border-emerald-200 text-emerald-700 px-2.5 sm:px-3.5 py-1 sm:py-1.5 rounded-xl text-[11px] sm:text-xs font-bold flex items-center gap-1.5">
         <span class="h-2 w-2 rounded-full bg-emerald-500"></span>
-        Airspace Safe (No Conflict)
+        <span id="badgeText">Safe</span>
       </div>
 
-      <button id="btnReset" class="bg-slate-900 hover:bg-slate-800 text-white px-4 py-2 rounded-xl text-xs font-bold transition flex items-center gap-1.5 shadow-sm">
+      <button id="btnReset" class="bg-slate-900 hover:bg-slate-800 text-white px-3 sm:px-4 py-1 sm:py-1.5 rounded-xl text-[11px] sm:text-xs font-bold transition flex items-center gap-1 shadow-sm shrink-0">
         <svg class="w-3.5 h-3.5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.5" d="M4 4v5h.582m15.356 2A8.001 8.001 0 004.582 9m0 0H9m11 11v-5h-.581m0 0a8.003 8.003 0 01-15.357-2m15.357 2H15"></path></svg>
-        Restart [R]
+        <span>Restart</span>
       </button>
     </div>
   </header>
 
-  <!-- MAIN VIEWPORT -->
-  <main class="flex-1 flex flex-col lg:flex-row p-5 gap-5 max-w-[1750px] w-full mx-auto overflow-hidden">
+  <main class="flex-1 flex flex-col lg:flex-row p-3 sm:p-5 gap-3 sm:gap-5 max-w-[1750px] w-full mx-auto">
     
-    <!-- LEFT: BIG MAP RADAR -->
-    <div class="flex-1 flex flex-col bg-white border border-slate-200 rounded-3xl p-5 shadow-sm overflow-hidden">
-      <div class="flex justify-between items-center mb-3">
+    <div class="flex-1 flex flex-col bg-white border border-slate-200 rounded-2xl sm:rounded-3xl p-3 sm:p-5 shadow-sm">
+      <div class="flex flex-wrap justify-between items-center mb-2 sm:mb-3 gap-2">
         <div>
-          <h2 class="text-sm font-bold text-slate-900">Live 3D Sector Map</h2>
-          <p class="text-[11px] text-slate-500">Autonomous vehicles & wildlife trajectory monitoring</p>
+          <h2 class="text-xs sm:text-sm font-bold text-slate-900">Live 3D Sector Map</h2>
+          <p class="text-[10px] sm:text-[11px] text-slate-500">Real-time multi-agent trajectory tracking</p>
         </div>
-        <div class="flex items-center gap-3.5 text-xs font-semibold text-slate-600 bg-slate-100 px-3 py-1 rounded-xl">
-          <span class="flex items-center gap-1.5"><span class="w-2.5 h-2.5 bg-emerald-500 rounded-full inline-block"></span> Cruising</span>
-          <span class="flex items-center gap-1.5"><span class="w-2.5 h-2.5 bg-rose-500 rounded-full inline-block"></span> Avoiding</span>
-          <span class="flex items-center gap-1.5">🦅 Wildlife</span>
-          <span class="flex items-center gap-1.5"><span class="w-3.5 h-3.5 border border-slate-500 rounded flex items-center justify-center font-bold text-[9px]">H</span> Destination</span>
+        <div class="flex flex-wrap items-center gap-2 text-[10px] sm:text-xs font-semibold text-slate-600 bg-slate-100 px-2.5 py-1 rounded-xl">
+          <span class="flex items-center gap-1"><span class="w-2 h-2 bg-emerald-500 rounded-full inline-block"></span> Cruise</span>
+          <span class="flex items-center gap-1"><span class="w-2 h-2 bg-rose-500 rounded-full inline-block"></span> Avoid</span>
+          <span class="flex items-center gap-1">🦅 Wildlife</span>
+          <span class="flex items-center gap-1"><span class="w-3 h-3 border border-slate-500 rounded flex items-center justify-center font-bold text-[8px]">H</span> Port</span>
         </div>
       </div>
 
-      <!-- CANVAS VIEWPORT -->
-      <div class="flex-1 flex items-center justify-center bg-slate-50 rounded-2xl border border-slate-200 overflow-hidden relative">
-        <canvas id="radarCanvas" width="860" height="600" class="block"></canvas>
+      <div id="canvasWrapper" class="w-full aspect-square sm:aspect-[4/3] lg:aspect-auto lg:flex-1 bg-slate-50 rounded-xl sm:rounded-2xl border border-slate-200 overflow-hidden relative flex items-center justify-center">
+        <canvas id="radarCanvas" class="w-full h-full block"></canvas>
       </div>
     </div>
 
-    <!-- RIGHT: STABLE NO-FUMBLE FLEET CARDS -->
-    <aside class="w-full lg:w-[440px] flex flex-col gap-3">
+    <aside class="w-full lg:w-[420px] flex flex-col gap-2.5 sm:gap-3">
       
-      <!-- TOP STATUS KPI TILE -->
-      <div class="bg-white border border-slate-200 p-4 rounded-2xl shadow-sm flex justify-between items-center">
+      <div class="bg-white border border-slate-200 p-3 sm:p-4 rounded-xl sm:rounded-2xl shadow-sm flex justify-between items-center">
         <div>
-          <div class="text-[10px] font-bold text-slate-400 uppercase tracking-wider">Mission Progress</div>
-          <div id="arrivedCount" class="text-lg font-extrabold text-slate-900 mt-0.5">0 of 4 Landed</div>
+          <div class="text-[10px] font-bold text-slate-400 uppercase tracking-wider">Mission Status</div>
+          <div id="arrivedCount" class="text-base sm:text-lg font-extrabold text-slate-900 mt-0.5">0 of 4 Landed</div>
         </div>
         <div class="text-right">
-          <div class="text-[10px] font-bold text-slate-400 uppercase tracking-wider">AI Engine</div>
-          <div class="text-xs font-bold text-blue-600 mt-0.5">XGBoost Cooperative</div>
+          <div class="text-[10px] font-bold text-slate-400 uppercase tracking-wider">Deconfliction</div>
+          <div class="text-xs font-bold text-blue-600 mt-0.5">XGBoost ML</div>
         </div>
       </div>
 
-      <!-- ACTIVE ADVISORY BANNER -->
       <div id="conflictsList">
-        <div class="bg-emerald-50 border border-emerald-200 p-3 rounded-2xl text-xs shadow-sm flex items-center justify-between">
-          <span class="font-bold text-emerald-800">✓ Airspace Clear</span>
+        <div class="bg-emerald-50 border border-emerald-200 p-2.5 sm:p-3 rounded-xl sm:rounded-2xl text-xs shadow-sm flex items-center justify-between">
+          <span class="font-bold text-emerald-800 text-[11px] sm:text-xs">✓ Airspace Clear</span>
           <span class="text-[10px] text-emerald-600 font-semibold">Corridors Nominal</span>
         </div>
       </div>
 
-      <!-- FLEET CARDS CONTAINER -->
-      <div class="flex-1 flex flex-col gap-2.5 overflow-hidden">
-        <h3 class="text-xs font-bold text-slate-800 uppercase tracking-wider">Fleet Status & Telemetry</h3>
-        <div id="fleetContainer" class="space-y-2.5 overflow-y-auto pr-1 flex-1">
-          <!-- Populated by JS -->
-        </div>
+      <div class="flex flex-col gap-2 sm:gap-2.5">
+        <h3 class="text-xs font-bold text-slate-800 uppercase tracking-wider">Fleet Telemetry</h3>
+        <div id="fleetContainer" class="space-y-2 sm:space-y-2.5">
+          </div>
       </div>
 
     </aside>
